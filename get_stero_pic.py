@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import os
 
 video_capture_0 = cv2.VideoCapture(0)
+video_capture_1 = cv2.VideoCapture(1)
 #video_capture_1 = cv2.VideoCapture(1)
 #calibration_path_l = 'C:/Users/User/OneDrive - The Hong Kong Polytechnic University/Postdoc_works/2019-second_half/Research_works/Suturing/Tests_by_industrial_camera/industrial_camera_calibration/camera_l/'
 #calibration_path_r = 'C:/Users/User/OneDrive - The Hong Kong Polytechnic University/Postdoc_works/2019-second_half/Research_works/Suturing/Tests_by_industrial_camera/industrial_camera_calibration/camera_r/'
@@ -20,15 +21,21 @@ video_capture_0 = cv2.VideoCapture(0)
 dVRK_image_path = os.path.join('.','picture')
 
 fig_num = 1
-
+sample_num = 50
 while True:
     # Capture frame-by-frame
-    ret0, frame0 = video_capture_0.read()
-    #ret1, frame1 = video_capture_1.read()
+    for i in range(sample_num):
+        ret0, frame0 = video_capture_0.read()
+        ret1, frame1 = video_capture_1.read()
 
     if (ret0):
         # Display the resulting frame
         plt.imshow(frame0)
+        plt.show()
+
+    if (ret1):
+        # Display the resulting frame
+        plt.imshow(frame1)
         plt.show()
 
     #if (ret1):
@@ -38,7 +45,8 @@ while True:
 
     # if cv2.waitKey(1) & 0xFF == ord('s'):
     if input() == 's':
-        cv2.imwrite(os.path.join(dVRK_image_path, str(fig_num) +'.png'), frame0)
+        cv2.imwrite(os.path.join(dVRK_image_path, 'left_' + str(fig_num) +'.png'), frame0)
+        cv2.imwrite(os.path.join(dVRK_image_path, 'right_' + str(fig_num) +'.png'), frame1)
         #cv2.imwrite(calibration_path_r + str(fig_num) +'.png', frame1)
         fig_num = fig_num + 1
         
